@@ -10,7 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+def read_secret(secret_name):
+    secret_file = os.environ.get(secret_name)
+    if secret_file:
+        with open(secret_file, 'r') as f:
+            return f.read().strip()
+    return None
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,9 +84,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'postgres': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': read_secret('POSTGRES_DB_FILE'),
+        'USER': read_secret('POSTGRES_USER_FILE'),
+        'PASSWORD': read_secret('POSTGRES_PASSWORD_FILE'),
+        'HOST': '127.0.0.1',
+        'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

@@ -3,12 +3,20 @@ services:
   django_local:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/sufle/learning/app 
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/pg_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_password
+      POSTGRES_DB_FILE: /run/secrets/pg_db
     ports:
       - "8000:8000"
+    volumes:
+      - .:/sufle/learning/app 
     depends_on:
-      - postgres_local   
+      - postgres_local
+    secrets:
+      - pg_password
+      - pg_user 
+      - pg_db
 
   postgres_local:
     image: postgres:latest
@@ -16,6 +24,7 @@ services:
     environment:
       POSTGRES_USER_FILE: /run/secrets/pg_user
       POSTGRES_PASSWORD_FILE: /run/secrets/pg_password
+      POSTGRES_DB_FILE: /run/secrets/pg_db
     ports:
       - "5432:5432"
     volumes:
@@ -23,11 +32,14 @@ services:
     secrets:
       - pg_password
       - pg_user 
+      - pg_db
   
 secrets:
   pg_user:
       file: ./secrets/pg_user.txt
   pg_password:
       file: ./secrets/pg_password.txt
+  pg_db:
+      file: ./secrets/pg_db.txt
 
 
