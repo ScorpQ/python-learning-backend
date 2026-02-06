@@ -1,0 +1,6 @@
+LINUX || MAC >> sudo docker compose run django_local django-admin startproject mysite .
+windows  >> docker-compose run django_local django-admin startproject mysite .
+
+docker-compose run django_local django-admin startproject mysite .
+
+docker compose up
