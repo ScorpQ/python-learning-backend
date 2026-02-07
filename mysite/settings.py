@@ -39,6 +39,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,15 +83,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'postgres': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': read_secret('POSTGRES_DB_FILE'),
-        'USER': read_secret('POSTGRES_USER_FILE'),
-        'PASSWORD': read_secret('POSTGRES_PASSWORD_FILE'),
-        'HOST': '127.0.0.1',
+        'NAME': 'pg_db_name',
+        'USER': 'postgres_user',
+        'PASSWORD': 'postgres_password',
+        'HOST': 'postgres_local',
         'PORT': 5432,
     }
 }
