@@ -3,4 +3,19 @@ windows  >> docker-compose run django_local django-admin startproject mysite .
 
 docker-compose run django_local django-admin startproject mysite .
 
+
 docker compose up
+
+
+bu komutları çalıştırdıktan sonra compose dosyasının service sırası önemli
+eğer pq aşağıdaki olursa django pg'Ye ulaşamdığı için crash yiyor.
+Ayrıca djangonun .env verilerini kontrol et en ufak hatada patlıyor.
+
+
+her şey çalışırken pg'nin exec bash ile terminaline ulaş sırasıya
+ psql -U postgres_user pg_db_name >>  \dt 
+eğer tablo görmüyorsan, bu sefer djangonun terminaline gidip bu kodu çalıştır:
+
+python manage.py migrate
+
+tekrardan geldiğinde yeni oluşmuş tabloları göreceksin.
